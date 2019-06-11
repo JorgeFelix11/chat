@@ -1,0 +1,84 @@
+mat-expansion-panel{
+  width: 25%;
+  margin-bottom: 1rem;
+}
+.search, .contact{
+  display: inline-block;
+}
+
+.contactFound{
+  margin-top: 1rem;
+}
+
+.profilePic{
+  width: 50%;
+}
+
+.container{
+  width: 100%;
+  height: 600px;
+}
+.container aside{
+  width: 20vw;
+  float: left;
+  overflow: auto;
+  height: 600px;
+  border: 1px solid black;
+}
+.container aside::-webkit-scrollbar{
+  width: 0px;
+  background: transparent;
+}
+.friend{
+  line-height: 1px;
+  display: inline-block;
+}
+
+.status{
+  float: right;
+}
+
+.container main{
+  width: 55vw;
+  clear: both;
+  display: inline-block;
+}
+
+.messages{
+  width: 55vw;
+  height: 500px;
+  border: 1px solid black;
+  overflow: auto;
+}
+
+.sender{
+  clear: both;
+  width: 40%;
+  float: right;
+  background-color: lightgreen;
+  border: 1px solid red;
+  list-style: none;
+  margin-right: 3rem;
+}
+
+.receiver{
+  clear: both;
+  width: 40%;
+  border: 1px solid black;
+  list-style: none;
+  float: left;
+  background-color: lightskyblue;
+}
+
+.sendBtn{
+  margin-left: 5px;
+  float: right;
+}
+mat-form-field{
+  width: 85%;
+}
+
+.accept{
+  font-size: .5rem;
+  width: 30px;
+}

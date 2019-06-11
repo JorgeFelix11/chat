@@ -1,0 +1,9 @@
+<mat-card>
+  <h3>Profile Info</h3>
+  <ul>
+    <li>Username: {{ user.username }}</li>
+    <li>Email: {{ user.email }}</li>
+    <li>Profile Picture:</li>
+    <img [src]="user.imagePath" [alt]="user.username">
+  </ul>
+</mat-card>

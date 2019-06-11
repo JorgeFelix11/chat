@@ -1,0 +1,70 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Add Contact
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <form (submit)="onAddContact(loginForm)" #loginForm="ngForm">
+  <mat-form-field>
+    <input 
+      matInput 
+      placeholder="Email" 
+      type="email"
+      name="email"
+      class="email"
+      required
+      email
+      ngModel>
+  </mat-form-field>
+  <button 
+    name="search" 
+    mat-raised-button 
+    class="search" 
+    [disabled]="loginForm.invalid" 
+    (click)="buttonClicked = 'search'" 
+    type="submit">Search</button>
+  <button 
+    name="add" 
+    mat-raised-button 
+    color="primary" 
+    [disabled]="!found" 
+    (click)="buttonClicked = 'add'" 
+    type="submit" 
+    class="contact">Add Contact</button>
+  </form>
+  <div *ngIf="found" class="contactFound">
+    <ul>
+      <li>
+        {{contact.email}}
+      </li>
+      <img class="profilePic" [src]="contact.imagePath" [alt]="contact.username">
+    </ul>
+  </div>
+</mat-expansion-panel>
+
+<div class="container">
+  <aside>
+    <mat-card *ngFor="let contact of contacts; let i = index" style="border: 1px black solid">
+      <img [src]="contact.imagePath" alt="" style="height: 40px; width: 40px">
+      <p class="friend">{{contact.email}} <span *ngIf="contact.status === 'Pending'">Pending</span></p>
+      <button class="status" mat-fab color="primary" *ngIf="contact.status === 'Invited'" (click)="onAccept(i)">Accept</button>
+      <button class="status" mat-mini-fab color="primary" *ngIf="contact.status === 'Accepted'">Chat</button>
+    </mat-card>
+  </aside>
+  <main>
+    <div class="messages">
+      <ul>
+        <li class="sender">Hello, I'm Jorge, who are you?</li>
+        <li class="receiver">My name is Leo, how are you doing?</li>
+      </ul>
+    </div>
+    <mat-card>
+      <mat-form-field>
+        <input matInput type="text" autocomplete="off" class="writingMessage">
+      </mat-form-field>
+      <button mat-raised-button class="sendBtn">Send</button>
+    </mat-card>
+  </main>
+</div>
+
+<router-outlet></router-outlet>
