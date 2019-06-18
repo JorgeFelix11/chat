@@ -9,6 +9,8 @@ export class NotificationsService{
   found: boolean;
   contact: User;
   contacts: any[] = [];
+  conversation: string;
+  messages: any[] = [];
   private foundStatus = new Subject<boolean>();
   private addStatus = new Subject<boolean>();
   constructor(private http: HttpClient, public router: Router){}
@@ -31,7 +33,7 @@ export class NotificationsService{
 
   addContact(email: string, status: string){
     const contact = { email, status };
-    this.http.post<any>('http://localhost:4000/api/contacts/add', contact)
+    this.http.post<any>('http://localhost:5000/add', contact)
       .subscribe(response => {
         this.contacts = []
         response.contacts.forEach(element => {
@@ -42,7 +44,7 @@ export class NotificationsService{
   }
 
   getContacts(){    
-    this.http.get<any>('http://localhost:4000/api/contacts/getcontacts')
+    this.http.get<any>('http://localhost:5000/getcontacts')
     .subscribe(response => {
       this.contacts = response.contacts;
       this.foundStatus.next(true);
@@ -53,7 +55,7 @@ export class NotificationsService{
     let contactAccepted = {
       friendId: this.contacts[index]._id
     }    
-    this.http.post<any>('http://localhost:4000/api/contacts/accept', contactAccepted)
+    this.http.post<any>('http://localhost:5000/accept', contactAccepted)
       .subscribe(response => {
         this.contacts = []
         response.contacts.forEach(element => {
@@ -62,4 +64,15 @@ export class NotificationsService{
         this.addStatus.next(true);
       })
   }
+
+  chat(index){
+    this.http.post<{conversation: {_id: string, messages: string[], participants: Object}}>('http://localhost:5000/chat', {friendId: this.contacts[index]._id})
+      .subscribe(response => {
+        this.messages = response.conversation.messages;
+        this.conversation = response.conversation._id
+        this.foundStatus.next(true);
+      })
+  }
+
+
 }

@@ -13,6 +13,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { InfoComponent } from './info/info.component';
+import { ChatService } from './dashboard/notifications/chat.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { InfoComponent } from './info/info.component';
     MatCardModule,
     MatExpansionModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [ChatService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

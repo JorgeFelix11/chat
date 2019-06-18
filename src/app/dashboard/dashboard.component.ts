@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { NotificationsService } from './notifications/notifications.service';
 import { User } from '../auth/user.model';
 import { Subscription } from 'rxjs';
+import { ChatService } from './notifications/chat.service';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -12,13 +13,22 @@ import { AuthService } from '../auth/auth.service';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   private buttonClicked: string;
-  private foundListenerSubs: Subscription
+  private foundListenerSubs: Subscription;
+  private messageListenerSubs: Subscription;
+  user: User;
   found: boolean;
   contact: User;
+  messages: any[] = [];
+  conversationId: string = '';
   contacts: {status: boolean, emailFriend: string, _id: string}[];
-  constructor(private notificationsService: NotificationsService, private authService: AuthService) { }
+  constructor(
+    private notificationsService: NotificationsService, 
+    private chatService: ChatService, 
+    private authService: AuthService
+  ) { }
   
   ngOnInit() {
+    this.user = this.authService.user;
     this.foundListenerSubs = this.notificationsService.foundListener()
     .subscribe()
     this.notificationsService.getContacts();
@@ -26,6 +36,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.contacts = this.notificationsService.contacts;
       })
+    this.chatService.getMessages().subscribe(message => {
+      this.messages.push(message)
+    })
+
   }
 
   onAddContact(addContactForm: NgForm){
@@ -55,8 +69,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
       })
     this.found = false;
   }
+
+  onChat(index){
+    this.notificationsService.chat(index);
+    this.chatService.leaveRoom(this.conversationId);
+    this.messageListenerSubs = this.notificationsService.foundListener()
+      .subscribe(found => {
+        this.messages = this.notificationsService.messages
+        this.conversationId = this.notificationsService.conversation;
+        this.chatService.joinRoom(this.conversationId);
+      })
+  }
+
+  sendMessage(messageForm: NgForm){
+    let message = messageForm.value.message
+    this.chatService.message(message, this.conversationId)
+    messageForm.resetForm()
+  }
   
   ngOnDestroy(){
-    this.foundListenerSubs.unsubscribe()
+    if(this.foundListenerSubs)this.foundListenerSubs.unsubscribe()
+    if(this.messageListenerSubs)this.messageListenerSubs.unsubscribe();
   }
 }

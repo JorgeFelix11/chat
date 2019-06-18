@@ -37,6 +37,7 @@ export class AuthService{
       this.isAuthenticated = true;
       this.authStatusListener.next(true);
       this.user = response.user;
+
       this.router.navigate(['/dashboard']);
       })
   }

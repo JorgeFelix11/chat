@@ -46,7 +46,7 @@ router.post('/signup', multer({storage}).single('image'), (req, res, next) => {
       let newUser = {
         _id: result._id
       }
-      axios.post('http://localhost:4000/api/contacts/onsignup', newUser)
+      axios.post('http://localhost:5000/onsignup', newUser)
       .then(result => {
         res.status(200).send(result.data)
       }).catch(e => {

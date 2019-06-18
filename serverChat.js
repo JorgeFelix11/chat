@@ -1,55 +1,60 @@
-const appChat = require("./backendChat/app")
+// const appChat = require("./backendChat/app")
+// const http = require("http");
+// const serverChat = http.createServer(appChat);
 
-const debug = require("debug")("node-angular");
-const http = require("http");
+// // let io = require('socket.io').listen(serverChat);
 
-const normalizePort = val => {
-  var port = parseInt(val, 10);
+// // require('./backendChat/routes/conversations').ioFn(io)
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+// const debug = require("debug")("node-angular");
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+// const normalizePort = val => {
+//   var port = parseInt(val, 10);
 
-  return false;
-};
+//   if (isNaN(port)) {
+//     // named pipe
+//     return val;
+//   }
 
-const onErrorChat = error => {
-  if (error.syscall !== "listen") {
-    throw error;
-  }
-  const bind = typeof portChat === "string" ? "pipe " + portChat : "port " + portChat;
-  switch (error.code) {
-    case "EACCES":
-      console.error(bind + " requires elevated privileges");
-      process.exit(1);
-      break;
-    case "EADDRINUSE":
-      console.error(bind + " is already in use");
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-};
+//   if (port >= 0) {
+//     // port number
+//     return port;
+//   }
 
-const onListeningChat = () => {
-  const addr = serverChat.address();
-  const bind = typeof portChat === "string" ? "pipe " + portChat : "port " + portChat;
-  debug("Listening on " + bind);
-};
+//   return false;
+// };
 
-const portChat = normalizePort(process.env.PORT || "4000");
+// const onErrorChat = error => {
+//   if (error.syscall !== "listen") {
+//     throw error;
+//   }
+//   const bind = typeof portChat === "string" ? "pipe " + portChat : "port " + portChat;
+//   switch (error.code) {
+//     case "EACCES":
+//       console.error(bind + " requires elevated privileges");
+//       process.exit(1);
+//       break;
+//     case "EADDRINUSE":
+//       console.error(bind + " is already in use");
+//       process.exit(1);
+//       break;
+//     default:
+//       throw error;
+//   }
+// };
 
-appChat.set("port", portChat);
+// const onListeningChat = () => {
+//   const addr = serverChat.address();
+//   const bind = typeof portChat === "string" ? "pipe " + portChat : "port " + portChat;
+//   debug("Listening on " + bind);
+// };
 
-const serverChat = http.createServer(appChat);
+// const portChat = normalizePort(process.env.PORT || "4000");
 
-serverChat.on("error", onErrorChat);
-serverChat.on("listening", onListeningChat);
-serverChat.listen(portChat);
+// appChat.set("port", portChat);
+
+// serverChat.on("error", onErrorChat);
+// serverChat.on("listening", onListeningChat);
+// serverChat.listen(portChat);
+// // console.log(serverChat)
+// module.exports = serverChat
